@@ -276,3 +276,55 @@ counter                         ; counter
 ```
 
  + In Emacs, the current position of the cursor is called point.
+
+
+
+## 3. How to Write Function Definitions
+ All functions are defined in terms of other functions, except for a
+ few **primitive functions** that are written in the C programming
+ language. The primitive functions are used exactly like those written
+ in Emacs Lisp and behave like them. When you write code in Emacs
+ Lisp, you do not distinguish between the use of functions written in
+ C and the use of functions written in Emacs Lisp. **The difference is
+ irrelevant**.
+
+### 3.1. The `defun` Macro
+ Function definition is created by evaluating a Lisp expression that
+ starts with the symbol `defun`.
+
+ A function definition has up to five parts following the word
+ `defun`:
+ 1. The name of the symbol to which the function definition should be attached.
+ 2. A list of the **arguments** that will be passed to the
+    function. If no arguments will be passed to the function, this is
+    an empty list, `()`.
+ 3. **Documentation** describing the function. Technically optional,
+    but strongly recommended.
+ 4. Optionally, an expression to make the function **interactive** so
+    you can use it by typing `M-x` and then the name of the function;
+    or by typing an appropriate key or keychord.
+ 5. The code that instructs the computer what to do: the **body** of
+    the function definition.
+
+``` emacs-lisp
+(defun function-name (arguments ...)
+  "optional-documentation..."
+  (interactive argument-passing-info) ; optional
+  body ... )
+
+;; Example
+(defun multiply-by-seven (number)
+  "Multiply NUMBER by seven."
+  (* 7 number))
+
+(multiply-by-seven 3) ;; 21
+```
+
+ + The choice of name is up to the programmer and should be chosen to
+   make the meaning of the function clear.
+ + The name you use in an argument list is private to that particular
+   definition.
+ + You can see he documentation string that describes the function
+   when you type `C-h f` and the name of a function.
+   + You should make the first line a complete sentence.
+   + You should not indent the second line of a documentation string.
