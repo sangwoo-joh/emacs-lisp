@@ -64,9 +64,8 @@
    the **innermost list first**.
 
 ### 1.6. Evaluation
- + Most frequently, the interpreter returns a value.
- + The other kind of action is called *side effect*.
-
+ + Most frequently, the interpreter **returns a value**.
+ + The other kind of action is called **side effect**.
 
 ### 1.7. Variables
  + `fill-column` is evaluated as value.
@@ -76,10 +75,11 @@
  + `+` generates an error message `(void-variable +)`
 
 ### 1.8. Arguments
- + According to the Oxford English Dictionary, the word "argument"
-   derives from the Latin for `to make clear, prove`; thus it came to
-   mean "the evidence offered as proof", which is to say, "the
-   information offered", which led to its meaning in Lisp.
+ > According to the Oxford English Dictionary, the word "argument"
+ > derives from the Latin for `to make clear, prove`; thus it came to
+ > mean "the evidence offered as proof", which is to say, "the
+ > information offered", which led to its meaning in Lisp.
+
  + Lisp counts everything between the two quotation marks as part of
    the string, including the spaces.
 
@@ -99,12 +99,12 @@
  started in the early days of Lisp programming. The `p` stands for
  "predicate". In the jargon used by the early Lisp researchers, a
  predicate refers to a function to determine whether some property is
- *true or false*. So the `p` tells us that `number-or-marker-p` is the
- name of a function that determines whether it is true or false that
- the argument supplied is a number or a marker. Other Lisp symbols
- that end in `p` include `zerop`, a function that tests whether its
- argument has the value of zero, and `listp`, a function that tests
- whether its argument is a list.
+ **true or false**. So the `p` tells us that `number-or-marker-p` is
+ the name of a function that determines whether it is true or false
+ that the argument supplied is a number or a marker. Other Lisp
+ symbols that end in `p` include `zerop`, a function that tests
+ whether its argument has the value of zero, and `listp`, a function
+ that tests whether its argument is a list.
 
 #### 1.8.5 The `message` Function
  + `message` function have format string just like in C/C++.
@@ -120,7 +120,7 @@
 
  + `set` function *returns* the list `(rose violet daisy buttercup)`
    itself.
- + As a *side efect*, the symbol `flowers` is bound to the list.
+ + As a **side efect**, the symbol `flowers` is bound to the list.
  + Every Lisp function must return a value if it does not get an
    error.
  + When you use `set`, you need to quote both arguments to `set`,
