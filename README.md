@@ -185,3 +185,94 @@ counter                         ; counter
    gets an error); in addition, it may also carry out some action that
    is a side effect. In many cases, a function's primary purpose is to
    create a side effect.
+
+
+
+## 2. Practicing Evaluation
+ *Whenever you give an editing command* to Emacs Lisp, such as the
+ command to move the cursor or to scroll the screen, *you are
+ evaluating an expression*, the first element of which is a
+ function. *This is how Emacs works*. (Super cool. :smirk:)
+
+ The functions you evaluate by typing keystrokes are called
+ **interactive functions**, or **commands**.
+
+### 2.1. Buffer Names
+
+``` emacs-lisp
+(buffer-name)      ; the name of the buffer
+(buffer-file-name) ; the full path-name of the file
+```
+
+ + A **file** is information recorded permanently in the computer.
+ + A **buffer** is information inside of Emacs that will vanish at the
+   end of the editing session or when you kill the buffer.
+ + Usually, a buffer contains information taht you have copied from a
+   file; we say the buffer is **visiting** that file.
+ + Changes to the buffer do not change the file, until you save the
+   buffer.
++ The symbol `nil` is from the Latin word for "nothing". In Lisp,
+  `nil` is also used to mean "false" and is a synonym for the empty
+  list `()`.
+
+ In spite of the distinction between files and buffers, you will often
+ find that people refer to a file whey they mean a buffer and vice
+ verse. .... When dealing with computer programs, it is important to
+ keep the distinction in mind.
+
+ :thinking: The word "buffer" comes from the meaning of the word as a
+ *cushion* that deadens the force of a collision. In early computers,
+ a buffer cushoined the interaction between files and the computer's
+ CPU. The drums or tapes that held a file and the CPU were pieces of
+ equipment that were very different from each other, owrking at their
+ own speeds, in spurts. The buffer made it possible for them to work
+ together effectively. Eventually, the buffer grew from being an
+ intermediary, a temporary holding place, to being the place where
+ work is done. This tranformation is rather like that of a small
+ seaport that grew into a great city: once it was merely the place
+ where cargo was warehoused temporarily before being loaded onto
+ ships; then it became a business and cultural center in its own
+ right.
+
+ + `C-u C-x C-e`: causes the value returned to appear after the
+   expression.
+
+### 2.2. Getting Buffers
+
+``` emacs-lisp
+(current-buffer)  ; get the buffer itself, not the name of the buffer
+(other-buffer)    ; get the most recently selected buffer other than the one you are in currently.
+```
+
+ A name and the object or entity to which the name refers are
+ different from each other. You are not your name. To get a buffer
+ itself, you need to use a function such as `current-buffer`.
+
+ What you see is a *printed representation of the name of the buffer*
+ without the contents of the buffer. Emacs works this way for two
+ reasons: the buffer may be thousands of lines long - too long to be
+ conveniently displayed; and, another buffer may have the same
+ contents but a different name, and it is important to distinguish
+ between them.
+
+### 2.3. Switching Buffers
+ + The keystrokes `C-x b` cause the Lisp interpreter to evaluate the
+ interactive function `switch-to-buffer`.
+   + For example, `C-f` calls `forward-char`, `M-e` calls
+     `forward-sentence`, and so on.
+ + `switch-to-bufffer` is designed for humans and does two different
+   things: it switches the buffer to which Emacs's attention is
+   directed; and it switches the buffer displayed in the window to the
+   new buffer.
+ + `set-buffer` does only one thing: it switches the attention of the
+   computer program to a different buffer. The buffer on the screen
+   remains unchanged.
+
+### 2.4. Buffer Size and the Location of Point
+
+``` emacs-lisp
+(buffer-size)  ; tells you the size of the current buffer; a count of the number of characters in the buffer.
+(point)        ; tells you where the cursor is located as a count of the number of characters from the beginning of the buffer up to point.
+```
+
+ + In Emacs, the current position of the cursor is called point.
