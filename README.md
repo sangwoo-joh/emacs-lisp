@@ -468,3 +468,20 @@ counter                         ; counter
    usually written on the same line as the symbol `if`.
  + The then-part is written on the second and subsequent lines to make
    it easier to read.
+
+#### 3.7.1 The `type-of-animal` Function in Detail
+
+``` emacs-lisp
+(defun type-of-animal (characteristic)
+  "Print message in each area depending to CHARACTERISTIC.
+If the CHARACTERISTIC is the string \"fierce\",
+then warn of a tiger."
+  (if (equal characteristic "fierce")
+      (message "It is a tiger!")))
+
+(type-of-animal "fierce") ; "It is a tiger!"
+(type-of-animal "what") ; nil
+```
+
+ + `equal` function determines whether its first argument is equal to
+   its second argument.
