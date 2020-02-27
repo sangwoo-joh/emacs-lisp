@@ -328,3 +328,143 @@ counter                         ; counter
    when you type `C-h f` and the name of a function.
    + You should make the first line a complete sentence.
    + You should not indent the second line of a documentation string.
+
+### 3.2. Install a Function Definition
+ By evaluating `defun`, you can install the function definition in
+ Emacs.
+
+ + You can read the documentation for the installed function by typing
+   `C-h f` and then the name of the function.
+ + If you want to change the code in the function definition, just
+   **rewrite it**.
+
+### 3.3. Make a Function Interactive
+ You can make a function interactive by placing a list that begins
+ with the special form `interactive` immediately after the
+ documentation.
+
+ + An interactive function can be invoked by typing `M-x` and then the
+   name of the function.
+ + Or, by typing the keys to which it is bound.
+
+``` emacs-lisp
+;; Interactive Example
+(defun multiply-by-seven (number)
+  "Multiply NUMBER by seven."
+  (interactive "p") ;; make this interactiv
+  (message "The result is %d" (* 7 number)))
+```
+
+ + `C-u 7 M-x multiply-by-seven` -> `The result is 49`
+ + A *prefix argument* is passed to an interactive function by typing
+   <META> key followed by a number, e.g. `M-3 M-e`, or by typing `C-u`
+   and then a number, e.g. `C-u 7 M-e`
+
+ + `"p"` tells Emacs to pass the prefix argument to the function and
+   use its value for the argument of the function.
+
+
+### 3.4. Different Options for `interactive`
+ A function with two or more arguments can have information passed to
+ each argument by adding parts to the string that follows
+ `interactive`. When you do this, the information is passed to each
+ argument in the same order it is specified in the `interactive`
+ list. In the string, each part is separated from the next part by a
+ `\n`, which is a newline.
+
+``` emacs-lisp
+(defun name-of-function (arg char)
+  "documentation ..."
+  (interactive "p\ncZap to char: ")
+  body-of-function ...)
+```
+
+ + When a function does not take arguments, `interactive` does not
+   require any. Such a function contains the simple expression
+   `(interactive)`.
+
+
+### 3.6. `let`
+ `let` is used to attach or bind a symbol to a value in such a way
+ that the Lisp interpreter will not confuse the variable with a
+ variable of the same name that is not part of the function. (local
+ binding, local variable)
+
+ Local variable created by a `let` expression retain their value
+ *only* within the `let` expression itself; the local variables have
+ no effect outside the `let` expression.
+
+ + In Emacs Lisp, scoping is dynamic, not lexical.
+ + `let` can create more than one variable at once.
+ + `let` gives each variable it creates an initial value, either a
+   value specified by you, or `nil`.
+ + After `let` has created and bound the variables, it executes the
+   code in the body of the `let`, and returns the value of the last
+   expression in the body, as the value of the whole `let` expression.
+
+#### 3.6.1. The Parts of a `let` Expression
+
+``` emacs-lisp
+(let varlist body...)
+
+;; Example
+(let ((variable value)
+      (variable value)
+      ...)
+ body...)
+```
+
+ + `varlist`: each element of which is either **a symbol** by itself
+   or **a two-element list**, the first element of which is a symbol.
+   + The symbols in `varlist` are the variables that are given initial
+     values by the `let` special form.
+   + A symbol by itself: initial value of `nil`
+   + First element of a two-element list: bound to the value that is
+     returned when the second element is evaluated.
+ + `body`: usually consists of one or more lists.
+
+#### 3.6.2. Sample `let` Expression
+
+``` emacs-lisp
+(let ((zebra "stripes")
+      (tiger "fierce"))
+ (message "One kind of animal has %s and another is %s."
+          zebra tiger))
+```
+
+> According to Jared Diamond in Guns, Germs, and Steel, "...zebras
+> become impossibly dangerous as they grow older" but the claim here
+> is that they do not become fierce like a tiger.
+
+#### 3.6.3. Uninitialized Variables in a `let` Statement
+
+``` emacs-lisp
+(let ((birch 3)
+      pine
+      fir
+      (oak 'some))
+ (message
+   "Here are %d variables with %s, %s, and %s value."
+   birch pine fir oak))
+
+;;  "Here are 3 variables with nil, nil, and some value."
+```
+
+
+### 3.7. The `if` Special Form
+
+``` emacs-lisp
+(if true-or-false-test
+    action-to-carry-out-if-test-is-true)
+
+;; Example
+(if (> 5 4)
+    (message "5 is greater than 4!"))
+```
+
+ + The test part of an `if` expression is often called the *if-part*,
+   and the second argument is often called the *then-part*.
+ + When an `if` expression is written, the true-or-false-test is
+   usually written on the same line as the symbol `if`.
+ + The then-part is written on the second and subsequent lines to make
+   it easier to read.
