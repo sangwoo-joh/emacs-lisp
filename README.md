@@ -485,3 +485,41 @@ then warn of a tiger."
 
  + `equal` function determines whether its first argument is equal to
    its second argument.
+
+### 3.8. If-then-else Expressions
+
+``` emacs-lisp
+(if true-or-false-test
+  action-to-carry-out-if-test-is-true)
+  action-to-carry-out-if-test-is-false)
+
+
+(if (> 4 5)
+    (message "4 falsely greater than 5!")  ; then-part
+    (message "4 is not greater than 5!"))  ; else-part
+```
+
+### 3.9. Truth and Falsehood in Emacs Lisp
+ In fact, "false" is just our old friend `nil`. Anything else -
+ anything at all- is "true".
+
+ The expression taht tests for truth is interpreted as true if the
+ result of evaluating it is a value that is not `nil`. In other words,
+ the reulst of the test is considered true if the value returned is a
+ number such as 47, a string such as `"hello"`, or a symbol (other
+ than `nil`), or a list (so long as it is not empty), or even a
+ buffer!
+
+#### An explanation of `nil`
+ The symbol `nil` has two meanings.
+
+ First, it means the empty list. `nil` can be written as an empty list
+ `()`. As far as the List interpreter is concerned, `()` and `nil` are
+ the same.
+
+ Second, it means false and is the value returned when a
+ true-or-false-test tests false.
+
+ Incidentally, if some other useful value is not available for a test
+ that returns true, then the List interpreter will return the symbol
+ `t` for true.
