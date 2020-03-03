@@ -523,3 +523,91 @@ then warn of a tiger."
  Incidentally, if some other useful value is not available for a test
  that returns true, then the List interpreter will return the symbol
  `t` for true.
+
+### 3.10. `save-excursion`
+ The third and the final special form.
+
+ It saves the location of point, executes the body of the function,
+ and then restores point to its previous position if its location was
+ changed. Its primary purpose is to keep the user from being surprised
+ and disturbed by unexpected movement of point.
+
+#### Point and Mark
+ * **Point**: The current location of the cursor. More precisely, on
+   terminals where the cursor appears to be on top of a character,
+   point is immediately before the character.
+   * In Emacs Lisp, point is an integer. The first character in a
+   buffer is number one, the second is number two, and so on.
+   * The function `point` returns the current position of the cursor
+     as a number.
+   * Each buffer has its own value for point.
+ * **Mark**: Another position in the buffer; its value can be set with
+   a command such as `C-<SPC>` or `(set-mark-command)`.
+   * If a mark has been set, you can use the command `C-x C-x` or
+     `(exchange-point-and-mark)` to cause the cursor to jump to the
+     mark and set the mark to be the previous position of point.
+   * In addition, if you set another mark, the position of the
+     previous marks is saved in the mark ring. Many mark positions can
+     be saved this way. You can jump the cursor to a saved mark by
+     typing `C-u <SPC>` one or more times.
+ * **Region**: The part of the buffer between point and mark.
+
+ The `save-excursion` special form saves the location of point and
+ restores this position after the code within the body of the special
+ form is evaluated by the Lisp interpreter. Thus, if point were in the
+ beginning of a piece of text and some code moved point to the end of
+ the buffer, the `save-excursion` would put point back to where it was
+ before, after the expressions in the body of the function were
+ evaluated.
+
+ To make sure the house stays clean, `save-excursion` restores the
+ value of point even if something goes wrong in the code inside of it.
+
+ In addition to recording the value of point, it keeps track of the
+ current **buffer**, and restores it, too.
+
+#### Template for a `save-excursion` Expression
+
+``` emacs-lisp
+(save-excursion
+  first-expression-in-body
+  second-expression-in-body
+  ...
+  last-expression-in-body)
+
+; could be included in let expression
+(let varlist
+    (save-excursion
+        body ...))
+```
+
+ The value of the last expression will be returned as the value of the
+ `save-excursion` function. The other expressions are evaluated only
+ for their side effects.
+
+### 3.11. Review
+#### `interactive`
+See [code characters for
+`interactive`](https://www.gnu.org/software/emacs/manual/html_node/elisp/Interactive-Codes.html#Interactive-Codes)
+
+ + `b`: The name of an existing buffer
+ + `f`: The name of an existing file
+ + `p`: The numeric prefix argument. (Note that this `p` is lower
+   case)
+ + `r`: Point and teh mark, as two numeric arguments, smallest
+   first. This is the only code letter that specified two successive
+   arguments rather than one.
+
+#### `equal`, `eq`
+ + `equal` returns true if the two objects have a similar structure
+   and contents, such as two copies of the same book.
+ + `eq` returns true if both arguments are actually the same
+   object. (known as **physical equality**)
+
+#### `string` compare
+ + `string<`, `string-lessp`: tests whether its first argument is
+   smaller than the second argument. case-sensitive.
+     + `string<` is an alternative for this defined by `defalias`.
+ + `string=`, `string-equal`: tests for equality.
+ + There are no string test functions that correspond to `>`, `>=`, or
+   `<=`.
