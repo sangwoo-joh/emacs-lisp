@@ -598,6 +598,8 @@ See [code characters for
    first. This is the only code letter that specified two successive
    arguments rather than one.
 
+ After all, all `interactive` functions are user interface.
+
 #### `equal`, `eq`
  + `equal` returns true if the two objects have a similar structure
    and contents, such as two copies of the same book.
@@ -611,3 +613,41 @@ See [code characters for
  + `string=`, `string-equal`: tests for equality.
  + There are no string test functions that correspond to `>`, `>=`, or
    `<=`.
+
+
+## 4. A Few Buffer-Related Functions
+
+### 4.1. Finding More Information
+ + `C-h f`: `describe-function`
+ + `C-h b`: `describe-bindings`
+
+ The files that contain Lisp code are conventionally called
+ libraries. The metaphor is derived from that of a specialized
+ library, such as a law library or an engineering library.
+
+ Each library, or file, contains functions that relate to a particular
+ topic or activity, such as `abbrev.el` for handling abbreviations and
+ other typing shortcuts.
+
+### 4.2. A Simplified `beginning-of-buffer` Definition
+
+``` emacs-lisp
+(defun simplified-beginning-of-buffer ()        ; empty arguments list
+  "Move point to the beginning of the buffer;   ; documentations
+  leave mark at the previous position."         ;
+  (interactive)                                 ; make it interactive
+  (push-mark)                                   ; body
+  (goto-char (point-min)))
+
+(defun simplified-end-of-buffer ()
+  "Move point to the end of the buffer;
+  leave mark at the previous position."
+  (interactive)
+  (push-mark)
+  (goto-char (point-max)))
+```
+
+ The `push-mark` command sets a mark at the place where the cursor was
+ located before it was moved to the beginning of the
+ buffer. Consequently, you can, if you wish, go back to where you were
+ originally by typing `C-x C-x` or `exchange-point-and-mark`.
